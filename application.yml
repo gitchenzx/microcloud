@@ -1,0 +1,26 @@
+server:
+  port: 9501
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:enjoy@eureka1:7001/eureka,http://admin:enjoy@eureka2:7002/eureka,http://admin:enjoy@eureka3:7003/eureka
+    #register-with-eureka: false
+  instance:
+    instance-id: microcloud-zuul-gateway
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认30秒）
+    lease-expiration-duration-in-seconds: 5 # 超过了5秒的间隔（默认是90秒)
+spring:
+  application:
+    name: microcloud-zuul-gateway
+  security:
+    user:
+      name: admin
+      password: enjoy
+zuul:
+  routes:
+    microcloud-provider-users: /users-proxy/**
+    microcloud-provider-product: /product-proxy/**
+  ignored-services:
+    "*"
+  prefix: /enjoy-api
